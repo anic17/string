@@ -34,14 +34,11 @@
 
 // Definitions for some macros
 
-#ifndef size_t // For compilers that do not support C99
-    typedef unsigned long size_t;
-#endif
 #ifndef NULL
-    #define NULL ((void*) 0)
+    #define NULL ((void *)0)
 #endif
 
-size_t strlen(char *s)
+unsigned long strlen(char *s)
 {
     int i;
     while (s[i] != '\0')
@@ -51,7 +48,7 @@ size_t strlen(char *s)
     return i;
 }
 
-size_t strxlen(char *s, char *exclude)
+unsigned long strxlen(char *s, char *exclude)
 {
     int i = 0, n = 0, a = 0;
     while (s[i] != '\0')
@@ -63,10 +60,12 @@ size_t strxlen(char *s, char *exclude)
                 a = 0;
             }
         }
-        if(a == 1)
+        if (a == 1)
         {
             n++;
-        } else {
+        }
+        else
+        {
             a = 1;
         }
         i++;
@@ -94,23 +93,22 @@ char *strtok(char *str, char *tok)
 
 int strcmp(char *s1, char *s2)
 {
-    int i;
-    while (s1[i] != '\0' && s2[i] != '\0')
+    while(*s1 != '\0' && *s2 != '\0')
     {
-        if (s1[i] != s2[i])
+        if(*s1++ != *s2++)
         {
-            return 1;
+            return 0;
         }
-        i++;
+
     }
-    return 0;
+    return 1;
 }
 
-int strncmp(char *s1, char* s2, size_t count)
+int strncmp(char *s1, char *s2, unsigned long count)
 {
-    for(int i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
     {
-        if(s1[i] != s2[i])
+        if (s1[i] != s2[i])
         {
             return i;
         }
@@ -154,40 +152,35 @@ char *strupper(char *s)
     }
 }
 
-char* strcat(char s1[], char s2[])
+char *strcat(char s1[], char s2[])
 {
 
     int i;
-    size_t n = strlen(s1);
+    unsigned long n = strlen(s1);
 
     while (s1[i] != 0)
     {
-        s1[i+n] = s2[i];
+        s1[i + n] = s2[i];
         i++;
     }
 
     return s1;
-
 }
 
-char* strcpy(char *dest, char *src)
+char *strcpy(char *dest, char *src)
 {
-    while(*src != '\0')
+    while (*src != '\0')
     {
         *dest++ = *src++;
-        
     }
     return dest;
-
 }
 
-char* strncpy(char *dest, char *src, size_t count)
+char *strncpy(char *dest, char *src, unsigned long count)
 {
-    while(*src != '\0' && *dest < count)
+    while (*src != '\0' && *dest < count)
     {
         *dest++ = *src++;
-        
     }
     return dest;
-
 }
