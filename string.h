@@ -33,18 +33,36 @@
 */
 
 // Definitions for some macros
-
+#ifdef _STRING_H
+#ifndef ANIC17_STRING_IGNORE_ERROR
+#error "You have the standard string.h included. To ignore this error message. Please define ANIC17_STRING_IGNORE_ERROR"
+#endif
+#endif
+#ifndef ANIC17_STRING_H
+#define ANIC17_STRING_H
 #ifndef NULL
-    #define NULL ((void *)0)
+#define NULL ((void *)0)
 #endif
 
+unsigned long strlen(char *s);
+unsigned long strxlen(char *s, char *exclude);
+char *strtok(char *str, char *tok);
+int strcmp(char *s1, char *s2);
+int strncmp(char *s1, char *s2, unsigned long count);
+int strstr(char *str, char *find);
+char *strlower(char *s);
+char *strupper(char *s);
+char *strcat(char s1[], char s2[]);
+char *strcpy(char *dest, char *src);
+char *strncpy(char *dest, char *src, unsigned long count);
+
+
+
+#ifdef ANIC17_STRING_IMPL
 unsigned long strlen(char *s)
 {
-    int i;
-    while (s[i] != '\0')
-    {
-        i++;
-    }
+    int i=0;
+    while (s[i++] != '\0');
     return i;
 }
 
@@ -99,7 +117,7 @@ int strcmp(char *s1, char *s2)
         {
             return 0;
         }
-
+        
     }
     return 1;
 }
@@ -154,16 +172,16 @@ char *strupper(char *s)
 
 char *strcat(char s1[], char s2[])
 {
-
+    
     int i;
     unsigned long n = strlen(s1);
-
+    
     while (s1[i] != 0)
     {
         s1[i + n] = s2[i];
         i++;
     }
-
+    
     return s1;
 }
 
@@ -184,3 +202,7 @@ char *strncpy(char *dest, char *src, unsigned long count)
     }
     return dest;
 }
+#endif  /*  ANIC17_STRING_IMPL*/
+#endif  /* ANIC17_STRING_H*/
+
+
